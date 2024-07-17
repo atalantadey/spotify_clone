@@ -4,4 +4,7 @@ class AppVectors {
   static const String logo = '${basePath}spotify$format';
   static const String moon = '${basePath}moon$format';
   static const String sun = '${basePath}sun$format';
+
+  static const String topRight = '${basePath}top_signup$format';
+  static const String botRight = '${basePath}bot_signup$format';
 }
