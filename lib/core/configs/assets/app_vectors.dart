@@ -7,4 +7,6 @@ class AppVectors {
 
   static const String topRight = '${basePath}top_signup$format';
   static const String botRight = '${basePath}bot_signup$format';
+
+  static const String frame = '${basePath}frame$format';
 }
