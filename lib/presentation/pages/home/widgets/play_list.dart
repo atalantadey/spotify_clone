@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/common/helpers/is_dark.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
+import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/pages/home/bloc/play_list_cubit.dart';
 import 'package:spotify/presentation/pages/home/bloc/play_list_state.dart';
 
@@ -22,32 +24,38 @@ class PlayList extends StatelessWidget {
               ),
             );
           }
-          if (state is PlayListLoaded) {
+          if (state is PlayListLoadFailure) {
+            print('Playlist Load Failure!!!!!....................');
+            return const Text('Cant Load Playlist');
+          } else if (state is PlayListLoaded) {
             print(' playlist loaded');
-            return const Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Playlist',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    Text(
-                      'See More',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Color(0xffC6C6C6)),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                //_playlist(state.songs)
-              ],
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+              child: Column(
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Playlist',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      Text(
+                        'See More',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xffC6C6C6)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _songs(state.song)
+                ],
+              ),
             );
           }
           return Container();
@@ -55,5 +63,72 @@ class PlayList extends StatelessWidget {
       ),
     );
   }
-  
+
+  Widget _songs(List<SongEntity> songs) {
+    return ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 55,
+                    width: 55,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: context.isDarkMode
+                          ? AppColors.botnav_darkGrey
+                          : const Color(0xffE6E6E6),
+                    ),
+                    child: Icon(
+                      Icons.play_arrow_rounded,
+                      color: context.isDarkMode
+                          ? AppColors.txt_grey
+                          : AppColors.dark_bg,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        songs[index].title,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      Text(
+                        songs[index].artist,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 14),
+                      ),
+                      const SizedBox(height: 2),
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    songs[index].duration.toString().replaceAll('.', ':'),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.favorite_rounded,
+                      color: AppColors.botnav_darkGrey,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 20),
+        itemCount: songs.length);
+  }
 }

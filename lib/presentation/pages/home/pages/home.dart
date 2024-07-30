@@ -87,7 +87,7 @@ class _RootPageState extends State<RootPage>
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 40.0),
+                  padding: const EdgeInsets.only(right: 60.0),
                   child: Image.asset(
                     AppImages.billieHome,
                   ),

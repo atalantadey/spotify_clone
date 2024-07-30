@@ -19,7 +19,7 @@ class NewSongs extends StatelessWidget {
         child: BlocBuilder<NewSongsCubit, NewSongsState>(
           builder: (context, state) {
             if (state is NewSongLoading) {
-              print('loading');
+              print('New Songs loading');
               return Container(
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator(
@@ -27,7 +27,7 @@ class NewSongs extends StatelessWidget {
                 ),
               );
             } else if (state is NewSongLoaded) {
-              print('loaded');
+              print(' New Songs loaded');
               return _songs(state.songs);
             }
             return Container();

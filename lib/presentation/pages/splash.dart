@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
@@ -17,7 +18,6 @@ class _SplashPageState extends State<SplashPage> {
     //make it last for approx 2 seconds
     redirect();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +30,9 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> redirect() async {
     await Future.delayed(const Duration(seconds: 2));
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const GettingStartedPage()));
+      MaterialPageRoute(
+        builder: (BuildContext context) => const GettingStartedPage(),
+      ),
+    );
   }
 }

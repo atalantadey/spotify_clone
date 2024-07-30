@@ -5,8 +5,7 @@ abstract class PlayListState {}
 class PlayListLoading extends PlayListState {}
 
 class PlayListLoaded extends PlayListState {
-  final List<SongEntity> songs;
-  PlayListLoaded({required this.songs});
+  final List<SongEntity> song;
+  PlayListLoaded({required this.song});
 }
-
 class PlayListLoadFailure extends PlayListState {}

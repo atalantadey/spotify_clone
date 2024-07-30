@@ -5,7 +5,7 @@ import 'package:spotify/domain/entities/song/song.dart';
 
 abstract class Songfirebaseservice {
   Future<Either> getNewSongs();
-  Future<Either> getPlaylist();
+  Future<Either> getPlayList();
 }
 
 class SongfirebaseserviceImpl extends Songfirebaseservice {
@@ -26,17 +26,19 @@ class SongfirebaseserviceImpl extends Songfirebaseservice {
 
       return Right(songs);
     } catch (e) {
+      print('Error for New Songs : $e');
       return const Left('An Unfortunate Error Occurred, Please Try Again!');
     }
   }
 
   @override
-  Future<Either> getPlaylist() async {
+  Future<Either> getPlayList() async {
     try {
       List<SongEntity> songs = [];
       var data = await FirebaseFirestore.instance
           .collection('Songs')
           .orderBy('releaseDate', descending: false)
+          .limit(10)
           .get();
 
       for (var element in data.docs) {
@@ -46,6 +48,7 @@ class SongfirebaseserviceImpl extends Songfirebaseservice {
 
       return Right(songs);
     } catch (e) {
+      print('Error for Playlist Songs : $e');
       return const Left('An Unfortunate Error Occurred, Please Try Again!');
     }
   }
