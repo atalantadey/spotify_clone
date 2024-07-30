@@ -5,6 +5,7 @@ import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/pages/home/bloc/play_list_cubit.dart';
 import 'package:spotify/presentation/pages/home/bloc/play_list_state.dart';
+import 'package:spotify/presentation/song_player/pages/song_player.dart';
 
 class PlayList extends StatelessWidget {
   const PlayList({super.key});
@@ -25,7 +26,7 @@ class PlayList extends StatelessWidget {
             );
           }
           if (state is PlayListLoadFailure) {
-            print('Playlist Load Failure!!!!!....................');
+            print('Playlist Load Failure!!!!!......');
             return const Text('Cant Load Playlist');
           } else if (state is PlayListLoaded) {
             print(' playlist loaded');
@@ -68,64 +69,80 @@ class PlayList extends StatelessWidget {
     return ListView.separated(
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 55,
-                    width: 55,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: context.isDarkMode
-                          ? AppColors.botnav_darkGrey
-                          : const Color(0xffE6E6E6),
-                    ),
-                    child: Icon(
-                      Icons.play_arrow_rounded,
-                      color: context.isDarkMode
-                          ? AppColors.txt_grey
-                          : AppColors.dark_bg,
-                    ),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SongPlayerPage(
+                    songEntity: songs[index],
                   ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        songs[index].title,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 55,
+                      width: 55,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.isDarkMode
+                            ? AppColors.botnav_darkGrey
+                            : Colors.green[100],
                       ),
-                      Text(
-                        songs[index].artist,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 14),
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        color: context.isDarkMode
+                            ? AppColors.primary
+                            : AppColors.dark_bg,
+                        size: 40,
                       ),
-                      const SizedBox(height: 2),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    songs[index].duration.toString().replaceAll('.', ':'),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_rounded,
-                      color: AppColors.botnav_darkGrey,
                     ),
-                  ),
-                ],
-              )
-            ],
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            songs[index].title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          Text(
+                            songs[index].artist,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 14),
+                          ),
+                          const SizedBox(height: 2),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      songs[index].duration.toString().replaceAll('.', ':'),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite_outline_outlined,
+                        size: 35,
+                        color: AppColors.botnav_darkGrey,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
         },
         separatorBuilder: (context, index) => const SizedBox(height: 20),

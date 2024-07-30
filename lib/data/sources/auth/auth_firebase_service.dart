@@ -35,7 +35,8 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       var data = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: createuserReq.email, password: createuserReq.password);
 
-      FirebaseFirestore.instance.collection('Users').add({
+      FirebaseFirestore.instance.collection('Users').doc(data.user?.uid)
+      .set({
         'name': createuserReq.fullname,
         'email': data.user?.email,
       });

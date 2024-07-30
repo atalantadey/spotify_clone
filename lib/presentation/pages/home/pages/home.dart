@@ -64,7 +64,7 @@ class _RootPageState extends State<RootPage>
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             const PlayList(),
           ],
