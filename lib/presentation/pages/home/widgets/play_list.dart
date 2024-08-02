@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark.dart';
+import 'package:spotify/common/widgets/fav_btn/fav_btn.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/pages/home/bloc/play_list_cubit.dart';
@@ -107,15 +108,21 @@ class PlayList extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            songs[index].title,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                          SizedBox(
+                            width: 180,
+                            child: Text(
+                              songs[index].title,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
                           ),
-                          Text(
-                            songs[index].artist,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 14),
+                          SizedBox(
+                            width: 180,
+                            child: Text(
+                              songs[index].artist,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 14),
+                            ),
                           ),
                           const SizedBox(height: 2),
                         ],
@@ -131,13 +138,8 @@ class PlayList extends StatelessWidget {
                     const SizedBox(
                       width: 15,
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_outline_outlined,
-                        size: 35,
-                        color: AppColors.botnav_darkGrey,
-                      ),
+                    FavBtn(
+                      songEntity: songs[index],
                     ),
                   ],
                 )
