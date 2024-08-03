@@ -19,6 +19,14 @@ class SongPlayerCubit extends Cubit<SongPlayerState> {
   void updateSongPlayer() {
     emit(SongPlayerLoaded());
   }
+  void next(){
+    audioPlayer.seekToNext();
+    emit(SongPlayerNext());
+  }
+  void previous(){
+    audioPlayer.seekToPrevious();
+    emit(SongPlayerPrevious());
+  }
 
   Future<void> loadSong(String url) async {
     //print('URL LOADED :  $url');

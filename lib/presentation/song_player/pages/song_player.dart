@@ -141,24 +141,48 @@ class SongPlayerPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            GestureDetector(
-              onTap: () {
-                context.read<SongPlayerCubit>().playOrPauseSong();
-              },
-              child: Container(
-                height: 80,
-                width: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.skip_previous_outlined,
+                    size: 40,
+                  ),
                 ),
-                child: Icon(
-                  context.read<SongPlayerCubit>().audioPlayer.playing
-                      ? Icons.pause
-                      : Icons.play_arrow_rounded,
-                  size: 60,
+                GestureDetector(
+                  onTap: () {
+                    context.read<SongPlayerCubit>().playOrPauseSong();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 80,
+                        width: 80,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primary,
+                        ),
+                        child: Icon(
+                          context.read<SongPlayerCubit>().audioPlayer.playing
+                              ? Icons.pause
+                              : Icons.play_arrow_rounded,
+                          size: 60,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.skip_next_outlined,
+                    size: 40,
+                  ),
+                ),
+              ],
             )
           ],
         );
