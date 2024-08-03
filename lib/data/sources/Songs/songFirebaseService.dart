@@ -11,6 +11,7 @@ abstract class Songfirebaseservice {
   Future<Either> getPlayList();
   Future<Either> addOrRemoveFavouriteSong(String songId);
   Future<bool> isFavouriteSong(String songId);
+  Future<Either> getUserFavSong();
 }
 
 class SongfirebaseserviceImpl extends Songfirebaseservice {
@@ -26,11 +27,10 @@ class SongfirebaseserviceImpl extends Songfirebaseservice {
 
       for (var element in data.docs) {
         var songModel = Songmodel.fromJson(element.data());
-        bool isFavourite= await sl<IsFavouriteSongUseCase>().call(
-          params: element.reference.id
-        );
-        songModel.isFavourite=isFavourite;
-        songModel.songId=element.reference.id;
+        bool isFavourite = await sl<IsFavouriteSongUseCase>()
+            .call(params: element.reference.id);
+        songModel.isFavourite = isFavourite;
+        songModel.songId = element.reference.id;
         songs.add(songModel.toEntity());
       }
 
@@ -123,6 +123,37 @@ class SongfirebaseserviceImpl extends Songfirebaseservice {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<Either> getUserFavSong() async {
+    try {
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      var user = firebaseAuth.currentUser;
+      List<SongEntity> favoriteSongs = [];
+      String uId = user!.uid;
+      QuerySnapshot favoritesSnapshot = await firebaseFirestore
+          .collection('Users')
+          .doc(uId)
+          .collection('Favourites')
+          .get();
+
+      for (var element in favoritesSnapshot.docs) {
+        String songId = element['songId'];
+        var song =
+            await firebaseFirestore.collection('Songs').doc(songId).get();
+        Songmodel songModel = Songmodel.fromJson(song.data()!);
+        songModel.isFavourite = true;
+        songModel.songId = songId;
+        favoriteSongs.add(songModel.toEntity());
+      }
+
+      return Right(favoriteSongs);
+    } catch (e) {
+      print(e);
+      return const Left('An error occurred');
     }
   }
 }

@@ -7,7 +7,8 @@ import 'package:spotify/domain/entities/song/song.dart';
 
 class FavBtn extends StatelessWidget {
   final SongEntity songEntity;
-  const FavBtn({super.key, required this.songEntity});
+  final Function? function;
+  const FavBtn({super.key, required this.songEntity,this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class FavBtn extends StatelessWidget {
                     ? Icons.favorite
                     : Icons.favorite_outline_outlined,
                 size: 35,
-                color: AppColors.botnav_darkGrey,
+                color: Colors.red[400],
               ),
             );
           }

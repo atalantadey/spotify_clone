@@ -9,7 +9,6 @@ import 'package:spotify/domain/entities/authentication/user.dart';
 
 abstract class AuthFirebaseService {
   Future<Either> signin(SigninUserReq signinuserReq);
-
   Future<Either> signup(CreateUserReq createuserReq);
   Future<Either> getUser();
 }
