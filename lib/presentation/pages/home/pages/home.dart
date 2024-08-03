@@ -7,6 +7,7 @@ import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/presentation/pages/home/widgets/new_songs.dart';
 import 'package:spotify/presentation/pages/home/widgets/play_list.dart';
+import 'package:spotify/presentation/pages/profile/profile.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -30,6 +31,9 @@ class _RootPageState extends State<RootPage>
     return Scaffold(
       appBar: BasicAppBar(
         hidebackbtn: true,
+        action: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ProfilePage()));
+        },icon: const Icon(Icons.person),),
         title: SvgPicture.asset(
           AppVectors.logo,
           height: 40,

@@ -13,11 +13,11 @@ class FavBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FavBtnCubit(),
-      child: BlocBuilder<FavBtnCubit, FavBtnState>(
+      child: BlocBuilder<FavBtnCubit,FavBtnState>(
         builder: (context, state) {
           if (state is FavBtnInit) {
             print('Fav Btn Init');
-            IconButton(
+            return IconButton(
               onPressed: () {
                 context.read<FavBtnCubit>().favBtnUpdated(songEntity.songId);
               },
@@ -32,7 +32,7 @@ class FavBtn extends StatelessWidget {
           }
           if (state is FavBtnUpdated) {
             print('Fav Btn Updated');
-            IconButton(
+           return  IconButton(
               onPressed: () {
                 context.read<FavBtnCubit>().favBtnUpdated(songEntity.songId);
               },
@@ -41,7 +41,7 @@ class FavBtn extends StatelessWidget {
                     ? Icons.favorite
                     : Icons.favorite_outline_outlined,
                 size: 35,
-                color: AppColors.botnav_darkGrey,
+                color: Colors.red[400],
               ),
             );
           }

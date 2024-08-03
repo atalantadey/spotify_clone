@@ -8,6 +8,8 @@ import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_state.dart';
 
+import '../../../common/widgets/fav_btn/fav_btn.dart';
+
 class SongPlayerPage extends StatelessWidget {
   final SongEntity songEntity;
   const SongPlayerPage({super.key, required this.songEntity});
@@ -87,13 +89,8 @@ class SongPlayerPage extends StatelessWidget {
             const SizedBox(height: 2),
           ],
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.favorite_outline_outlined,
-            size: 35,
-            color: AppColors.botnav_darkGrey,
-          ),
+        FavBtn(
+          songEntity: songEntity,
         ),
       ],
     );
